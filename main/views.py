@@ -20,3 +20,10 @@ def tags_questions(request):
 
 def settings(request):
     return render(request, 'main/settings.html')
+
+
+def login(request):
+    return render(request, 'main/login.html')
+
+def register(request):
+    return render(request, 'main/register.html')

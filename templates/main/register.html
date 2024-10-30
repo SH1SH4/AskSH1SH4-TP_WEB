@@ -1,0 +1,36 @@
+{% extends "main/unathorized.html" %}
+{% load static %}
+{% block content %}
+<form class="mt-5">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nickname</span>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="email">Email</span>
+        <input type="text" class="form-control" placeholder="Your email"
+               aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="password">Password</span>
+        <input type="password" class="form-control"
+               aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="repeat_password">Repeat Password</span>
+        <input type="password" class="form-control"
+               aria-describedby="basic-addon1">
+    </div>
+
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Upload avatar</label>
+        <input class="form-control" type="file" id="formFile">
+    </div>
+
+    <button type="button" class="btn btn-primary">Register!</button>
+</form>
+{% endblock %}
