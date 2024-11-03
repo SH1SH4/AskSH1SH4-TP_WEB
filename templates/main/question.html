@@ -3,45 +3,39 @@
 {% block content %}
 <div class="card">
     <div class="row" style="padding: .5rem;">
-        <div class="col-2">
-            <img src="{% static 'images/мем.png' %}" class="img-fluid"
-                 style="margin: .2rem; width: 100%;" alt="...">
-            <p><input type="number" name="t" value="5" min="0" max="10"
-                      style="margin-left: .2rem; width: 100%;"></p>
+        <div class="col-2 align-content-center">
+            <div class="ratio ratio-1x1 ">
+                    <img src="/{{post.author.ava}}" class="rounded-circle w-100"
+                         alt="...">
+                </div>
+            <!--                 /static/avatar/Rybolov_1982/90306f9s-1920_MjOdOkT.jpg-->
+            <!--            static/avatar/Rybolov_1982/90306f9s-1920_MjOdOkT.jpg-->
+            <p class="text-center">@{{ post.author.username }}</p>
         </div>
         <div class="col-10">
-            <h5 class="card-title">Who is shedding?</h5>
-            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen
-                book. It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <a>Tags:</a>
-            <a href="#" class="card-link">Another link</a>
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.text }}</p>
+            <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
+                <p class="text-center text-body-secondary"> Tags:
+                    {% for i in post.tags.all %}
+                    {{ i.title }}
+                    {% endfor %}
+                </p>
+            </footer>
         </div>
     </div>
-    {% for i in 'xx' %}
+    {% for i in comments %}
     <div class="card col-11 mx-auto" style="margin-bottom: .5rem;">
         <div class="row " style="padding: .5rem;">
-            <div class="col-2">
-                <img src="{% static 'images/мем.png' %}" class="img-fluid"
-                     style="margin: .2rem; width: 100%;" alt="...">
-                <p><input type="number" name="t" value="5" min="0" max="10"
-                          style="margin-left: .2rem; width: 100%;"></p>
+            <div class="col-1">
+                <div class="ratio ratio-1x1">
+                    <img src="/{{i.author.ava}}" class="rounded-circle w-100"
+                         alt="...">
+                </div>
             </div>
-            <div class="col-10">
-                <h5 class="card-title">Who is shedding?</h5>
-                <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                    release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                    desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                <a>Tags:</a>
-                <a href="#" class="card-link">Another link</a>
+            <div class="col">
+                <h5 class="card-title">@{{ i.author.username }}</h5>
+                <p class="card-text">{{ i.text }}</p>
             </div>
         </div>
     </div>

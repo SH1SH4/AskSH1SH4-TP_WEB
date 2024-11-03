@@ -2,41 +2,31 @@
 {% load static %}
 
 {% block content %}
-    <div>
-        <h1>New Questions</h1>
-        {% for i in 'xxxxx' %}
-        <div class="card" style="margin-bottom: .5rem;">
-            <div class="row" style="padding: .5rem;">
-                <div class="col-2">
-                    <img src="{% static 'images/мем.png' %}" class="img-fluid"
-                         style="margin: .2rem; width: 100%;" alt="...">
-                    <p><input type="number" name="t" value="5" min="0" max="10"
-                              style="margin-left: .2rem; width: 100%;"></p>
+<div>
+    <h1>New Questions</h1>
+    {% for i in posts %}
+    <div class="card" style="margin-bottom: .5rem;">
+        <div class="row" style="padding: .5rem;">
+            <div class="col-2">
+                <div class="ratio ratio-1x1 ">
+                    <img src="/{{i.author.ava}}" class="rounded-circle w-100"
+                         alt="...">
                 </div>
-                <div class="col-10">
-                    <h5 class="card-title">Who is shedding?</h5>
-                    <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen
-                        book. It has survived not only five centuries, but also the leap into electronic
-                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                        release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <a href="#" class="card-link">answer</a>
-                    <a>Tags:</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
+                <p class="text-center">@{{ i.author.username }}</p>
+            </div>
+            <div class="col-10">
+                <h5 class="card-title"><a href="question/{{ i.id }}">{{ i.title }}</a></h5>
+                <p class="card-text">{{ i.text }}</p>
             </div>
         </div>
-        {% endfor %}
+        <p class="card-footer">
+            <a>Tags:</a>
+            {% for j in i.tags.all %}
+            <a href="/tag/{{ j.id }}" class="card-link">{{ j.title }}</a>
+            {% endfor %}
+        </p>
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </nav>
+    {% endfor %}
+    {% include "main/post_pagination.html" %}
+</div>
 {% endblock %}
