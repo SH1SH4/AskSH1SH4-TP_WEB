@@ -14,12 +14,11 @@ class Command(BaseCommand):
         users = create_user_list(kwargs['ratio'])
         User.objects.bulk_create(users)
 
-        #Прекрасно осознаю гадостность следующих строк, но причину ошибки я не выявил
-        try:
-            posts = create_post_list(kwargs['ratio'] * 10)
-            Post.objects.bulk_create(posts)
-        except IntegrityError:
-            pass
+        posts, post_tags = create_post_list(kwargs['ratio'] * 10)
+        Post.objects.bulk_create(posts)
+        for post, tags in post_tags:
+            post_in_db = Post.objects.get(id=post.id)
+            post_in_db.tags.set(tags)
 
         comments = create_comment_list(kwargs['ratio'] * 100)
         Comment.objects.bulk_create(comments)

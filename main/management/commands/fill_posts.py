@@ -17,18 +17,22 @@ def create_post_list(ratio):
     users = User.objects.all()
     tags = Tag.objects.get_all()
     posts = []
+    post_tags = []
     for i in range(0, ratio):
-        temp = Post.objects.create(title=f'{i} - What is Lorem Ipsum?', text=TEXT, author=choice(users))
-        print(temp.id)
-        temp.tags.add(*[choice(tags) for _ in range(randint(2,5))])
-        posts.append(temp)
-    return posts
+        post = Post(title=f'{i} - What is Lorem Ipsum?', text=TEXT, author=choice(users))
+        posts.append(post)
+        selected_tags = [choice(tags) for _ in range(randint(2, 5))]
+        post_tags.append((post, selected_tags))
+    return posts, post_tags
 
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        posts = create_post_list(kwargs['ratio'])
+        posts, post_tags = create_post_list(kwargs['ratio'])
         Post.objects.bulk_create(posts)
+        for post, tags in post_tags:
+            post_in_db = Post.objects.get(id=post.id)
+            post_in_db.tags.set(tags)
 
     def add_arguments(self, parser):
         parser.add_argument("-ratio", type=int)
