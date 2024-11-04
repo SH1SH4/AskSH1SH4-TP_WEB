@@ -8,7 +8,7 @@ from main.models import *
 def index(request):
     page_number = request.GET.get('page')
     posts = Post.objects.all()
-    paginator = Paginator(posts, 1)
+    paginator = Paginator(posts, 3)
     page_obj = paginator.get_page(page_number)
 
     last_page = paginator.page_range[-1]
@@ -36,7 +36,7 @@ def tags_questions(request, pk):
     tag = Tag.objects.get(id=pk)
     posts = Post.objects.filter(tags=tag)
     page_number = request.GET.get('page')
-    paginator = Paginator(posts, 1)
+    paginator = Paginator(posts, 3)
     page_obj = paginator.get_page(page_number)
     context = {
         'posts': page_obj,

@@ -1,44 +1,25 @@
 {% extends "main/main.html" %}
 {% load static %}
 {% block content %}
+{% include "main/post_card.html" %}
 <div class="card">
-    <div class="row" style="padding: .5rem;">
-        <div class="col-2 align-content-center">
-            <div class="ratio ratio-1x1 ">
-                    <img src="/{{post.author.ava}}" class="rounded-circle w-100"
-                         alt="...">
-                </div>
-            <!--                 /static/avatar/Rybolov_1982/90306f9s-1920_MjOdOkT.jpg-->
-            <!--            static/avatar/Rybolov_1982/90306f9s-1920_MjOdOkT.jpg-->
-            <p class="text-center">@{{ post.author.username }}</p>
-        </div>
-        <div class="col-10">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.text }}</p>
-            <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
-                <p class="text-center text-body-secondary"> Tags:
-                    {% for i in post.tags.all %}
-                    {{ i.title }}
-                    {% endfor %}
-                </p>
-            </footer>
-        </div>
-    </div>
     {% for i in comments %}
-    <div class="card col-11 mx-auto" style="margin-bottom: .5rem;">
-        <div class="row " style="padding: .5rem;">
-            <div class="col-1">
-                <div class="ratio ratio-1x1">
-                    <img src="/{{i.author.ava}}" class="rounded-circle w-100"
-                         alt="...">
-                </div>
+    <div class="row " style="padding: .5rem;">
+        <div class="col-1">
+            <div class="ratio ratio-1x1">
+                <img src="/{{i.author.ava}}" class="rounded-circle w-100"
+                     alt="...">
             </div>
-            <div class="col">
-                <h5 class="card-title">@{{ i.author.username }}</h5>
-                <p class="card-text">{{ i.text }}</p>
-            </div>
+        </div>
+        <div class="col">
+            <h5 class="card-title">@{{ i.author.username }}</h5>
+            <p class="card-text">{{ i.text }}</p>
         </div>
     </div>
     {% endfor %}
+</div>
+<div class="input-group my-1">
+    <span class="input-group-text">Ваш комментарий: </span>
+    <textarea class="form-control" aria-label="With textarea"></textarea>
 </div>
 {% endblock %}

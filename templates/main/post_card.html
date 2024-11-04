@@ -1,0 +1,21 @@
+<div class="card my-1">
+    <div class="row p-1">
+        <div class="col-2">
+            <div class="ratio ratio-1x1 ">
+                <img src="/{{ post.author.ava }}" class="rounded-circle w-100"
+                     alt="...">
+            </div>
+            <p class="text-center">@{{ post.author.username }}</p>
+        </div>
+        <div class="col-10">
+            <h5 class="card-title"><a href="{% url 'question' post.id %}">{{ post.title }}</a></h5>
+            <p class="card-text">{{ post.text }}</p>
+        </div>
+    </div>
+    <p class="card-footer">
+        <a>Tags:</a>
+        {% for j in post.tags.all %}
+        <a href="{% url 'tags_questions' j.id %}" class="card-link">{{ j.title }}</a>
+        {% endfor %}
+    </p>
+</div>

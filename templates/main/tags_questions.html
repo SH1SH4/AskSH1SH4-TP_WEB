@@ -4,27 +4,8 @@
 {% block content %}
 <div>
     <h1>Tag: {{ tag }}</h1>
-    {% for i in posts %}
-    <div class="card" style="margin-bottom: .5rem;">
-        <div class="row" style="padding: .5rem;">
-            <div class="col-2">
-                <div class="ratio ratio-1x1 ">
-                    <img src="/{{i.author.ava}}" class="rounded-circle w-100"
-                         alt="...">
-                </div>
-                <p class="text-center">@{{ i.author.username }}</p>
-            </div>
-            <div class="col-10">
-                <h5 class="card-title"><a href="/question/{{ i.id }}">{{ i.title }}</a></h5>
-                <p class="card-text">{{ i.text }}</p>
-                <a href="#" class="card-link">answer</a>
-                <a>Tags:</a>
-                {% for j in i.tags.all %}
-                <a href="/tag/{{ j.id }}" class="card-link">{{ j.title }}</a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+    {% for post in posts %}
+    {% include "main/post_card.html" %}
     {% endfor %}
 </div>
 {% include "main/post_pagination.html" %}
