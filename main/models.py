@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from datetime import datetime
 
 
 def user_directory_path(instance, filename):
@@ -9,26 +8,52 @@ def user_directory_path(instance, filename):
     return f'static/avatar/{instance.username}/{filename}'
 
 
-class User(AbstractUser):
-    ava = models.ImageField(upload_to=user_directory_path)
+class PostManager(models.Manager):
+    def get_all(self):
+        return self.all()
 
+    def get_by_tag(self, tag):
+        return self.filter(tags=tag)
+
+    def get_one(self, pk):
+        return self.get(id=pk)
+
+
+class TagManager(models.Manager):
+
+    def get_one(self, pk):
+        return self.get(id=pk)
+
+    def get_all(self):
+        return self.all()
+
+
+class User(AbstractUser):
+    ava = models.ImageField(upload_to=user_directory_path, default='static/avatar/default.jpg')
+
+    def __str__(self):
+        return f'{self.id}.{self.username}'
 
 class Tag(models.Model):
     title = models.CharField(max_length=50)
+    objects = TagManager()
 
     def __str__(self):
         return self.title
 
 
 class Post(models.Model):
+    # id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
-    time = models.DateTimeField()
+    time = models.DateTimeField(default=datetime.now())
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
 
+    objects = PostManager()
+
     def __str__(self):
-        return self.title
+        return f'{self.id} {self.title}'
 
 
 # class PostTags(models.Model):
@@ -44,10 +69,19 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, to_field='id')
     is_answer = models.BooleanField(default=False)
     text = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
-        return self.author.username + ': ' + self.text
+        return f'{self.id} - {self.author.username}: {self.text}'
+
+
+class LikeComment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, to_field='id')
+
+    class Meta:
+        unique_together = ('author', 'post',)
+
 
 
 class PostLikes(models.Model):
