@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from django.db.models import Count
 
 
 def user_directory_path(instance, filename):
@@ -18,6 +19,9 @@ class PostManager(models.Manager):
     def get_one(self, pk):
         return self.get(id=pk)
 
+    def get_hot(self):
+        return self.annotate(comment_count=Count('comment')).order_by('-comment_count')
+
 
 class TagManager(models.Manager):
 
@@ -28,11 +32,23 @@ class TagManager(models.Manager):
         return self.all()
 
 
+class CommentManager(models.Manager):
+    def get_one(self, pk):
+        return self.get(id=pk)
+
+    def get_all(self):
+        return self.all()
+
+    def get_most_liked(self, pk):
+        return self.filter(post__id=pk).annotate(comment_count=Count('likecomment')).order_by('-comment_count')
+
+
 class User(AbstractUser):
     ava = models.ImageField(upload_to=user_directory_path, default='static/avatar/default.jpg')
 
     def __str__(self):
         return f'{self.id}.{self.username}'
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50)
@@ -56,14 +72,6 @@ class Post(models.Model):
         return f'{self.id} {self.title}'
 
 
-# class PostTags(models.Model):
-#     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.post.title + ': ' + self.tag.title
-
-
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, to_field='id')
@@ -71,17 +79,18 @@ class Comment(models.Model):
     text = models.TextField()
     date = models.DateTimeField(default=datetime.now())
 
+    objects = CommentManager()
+
     def __str__(self):
         return f'{self.id} - {self.author.username}: {self.text}'
 
 
 class LikeComment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, to_field='id')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('author', 'post',)
-
+        unique_together = ('user', 'comment')
 
 
 class PostLikes(models.Model):

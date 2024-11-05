@@ -14,6 +14,11 @@ class UserAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(LikeComment)
+class UserAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(Comment)
 class UserAdmin(admin.ModelAdmin):
     pass

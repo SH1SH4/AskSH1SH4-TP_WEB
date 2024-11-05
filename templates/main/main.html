@@ -13,18 +13,22 @@
 
 <header class="p-3 bg-secondary text-white w-100">
     <!--    <div class="container">-->
-    <div class="d-flex row flex-wrap align-items-center justify-content-between">
-        <a href="/" class="col-2 d-flex align-items-center text-white text-decoration-none">
-            <img class="bi me-2" width="32" height="32" role="img" src="{% static 'images/communication.png'%}">
-            </img>
+    <div class="d-flex row flex-wrap align-items-center">
+        <a class="col-1 d-flex align-items-center text-white text-decoration-none" href="{% url 'index' %}">
+                <img width="32" height="32" role="img"
+                     src="{% static 'images/communication.png'%}">
         </a>
-
-        <div class="col-4">
+        <a href="{% url 'hot' 1 %}" class="col-1">
+            <h5>Hot</h5>
+        </a>
+        <div class="col-1"></div>
+        <div class="col-6">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search...">
                 <span class="input-group-text" id="basic-addon2">Search!</span>
             </div>
         </div>
+        <div class="col-1"></div>
 
         <div class="col-2 d-flex">
             <a href="/" class=" d-flex text-white text-decoration-none">
@@ -32,7 +36,7 @@
             </a>
             <div class="container">
                 <div class="row">
-                        <a class="text-center">Name</a>
+                    <a class="text-center">Name</a>
                 </div>
                 <div class="row">
                     <div class="col text-center">

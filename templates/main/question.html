@@ -3,17 +3,23 @@
 {% block content %}
 {% include "main/post_card.html" %}
 <div class="card">
-    {% for i in comments %}
+    {% for comment in comments %}
     <div class="row " style="padding: .5rem;">
         <div class="col-1">
             <div class="ratio ratio-1x1">
-                <img src="/{{i.author.ava}}" class="rounded-circle w-100"
+                <img src="/{{comment.author.ava}}" class="rounded-circle w-100"
                      alt="...">
+            </div>
+            <div class="my-1 py-auto">
+                <span class="input-group-text mx-0 px-2 py-1">
+                    <img src="{% static 'images/like.png' %}" width="24" height="24" role="img">
+                    <a>{{ comment.comment_count }}</a>
+                </span>
             </div>
         </div>
         <div class="col">
-            <h5 class="card-title">@{{ i.author.username }}</h5>
-            <p class="card-text">{{ i.text }}</p>
+            <h5 class="card-title">@{{ comment.author.username }}</h5>
+            <p class="card-text">{{ comment.text }}</p>
         </div>
     </div>
     {% endfor %}

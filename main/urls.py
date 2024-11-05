@@ -9,5 +9,6 @@ urlpatterns = [
     path('tag/<int:pk>/', views.tags_questions, name='tags_questions'),
     path('settings', views.settings, name='settings'),
     path('login', views.login, name='login'),
-    path('register', views.register, name='register')
+    path('register', views.register, name='register'),
+    path('hot/<int:pk>', views.hot, name="hot")
 ]

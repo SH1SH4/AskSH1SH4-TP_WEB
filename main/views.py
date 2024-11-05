@@ -20,6 +20,21 @@ def index(request):
     return render(request, 'main/index.html', context=context)
 
 
+def hot(request, pk):
+    page_number = request.GET.get('page')
+    posts = Post.objects.get_hot()
+    paginator = Paginator(posts, 10)
+    page_obj = paginator.get_page(page_number)
+
+    last_page = paginator.page_range[-1]
+
+    context = {
+        'posts': page_obj,
+        'last_page': last_page
+    }
+    return render(request, 'main/hot.html', context=context)
+
+
 def ask(request):
     return render(request, 'main/ask.html')
 
@@ -27,7 +42,7 @@ def ask(request):
 def question(request, pk):
     context = {
         'post': Post.objects.get_one(pk),
-        'comments': Comment.objects.filter(post__id=pk).all(),
+        'comments': Comment.objects.get_most_liked(pk),
     }
     return render(request, 'main/question.html', context)
 
