@@ -1,0 +1,33 @@
+{% extends "main/main.html" %}
+{% load static %}
+{% block content %}
+<h1>Settings: Karasik</h1>
+<div class="input-group mb-3">
+    <span class="input-group-text">Login</span>
+    <input type="text" class="form-control" placeholder="Login" aria-label="Login" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Email</span>
+    <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Username</span>
+    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+           aria-describedby="basic-addon1">
+</div>
+<div class="row">
+    <div class="col-2">
+        <img src="{% static 'images/мем.png' %}" class="img-fluid"
+             style="margin: .2rem; width: 100%;" alt="...">
+    </div>
+
+    <div class="col-10 my-auto mx-auto">
+        <input class="form-control" type="file" id="formFile">
+    </div>
+</div>
+<button type="button" class="mt-1 mx-auto btn btn-success">Save</button>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "main/main.html" %}
+{% load static %}
+{% block content %}
+<h1>Question</h1>
+<div class="input-group mb-3">
+  <span class="input-group-text">Title</span>
+  <input type="text" class="form-control" placeholder="" aria-label="Title" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3" style="height: 20%;">
+  <span class="input-group-text">With textarea</span>
+  <textarea class="form-control" aria-label="Text"></textarea>
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text">Tags</span>
+  <input type="text" class="form-control" placeholder="" aria-label="Title" aria-describedby="basic-addon1">
+</div>
+
+<button type="button" class="btn btn-success">Ask!</button>
+
+{% endblock %}
